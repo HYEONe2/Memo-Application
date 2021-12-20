@@ -133,10 +133,14 @@ void CChildView::OnOpen()
 		while(m_File.ReadString(strLoad))
 			strTotal += strLoad + _T("\n");
 
-		m_TextBox->SetWindowText(strTotal);
+		if (m_TextBox)
+			m_TextBox->SetWindowText(strTotal);
 
 		m_File.Close();
 	}
+
+	if (m_TextBox)
+		m_TextBox->SetSel(-1, -1);
 }
 
 
@@ -157,7 +161,8 @@ void CChildView::OnSave()
 
 		CStdioFile m_File(pFile);
 
-		m_TextBox->GetWindowTextW(strTotal);
+		if (m_TextBox)
+			m_TextBox->GetWindowTextW(strTotal);
 
 		m_File.WriteString(strTotal);
 		m_File.Close();
