@@ -197,7 +197,19 @@ void CChildView::OnDelete()
 	if (!m_TextBox)
 		return;
 
-	m_TextBox->SendMessage(WM_DELETEITEM, 0, 0);
+	CString strTotal; 
+	m_TextBox->GetWindowTextW(strTotal);
+
+	int nSelStart, nSelEnd;
+	int nLineNum, nColNum;
+
+	m_TextBox->GetSel(nSelStart, nSelEnd);
+	nLineNum = m_TextBox->LineFromChar(nSelStart);
+	nColNum = nSelStart - m_TextBox->LineIndex(nLineNum);
+
+	strTotal.Delete(nColNum);
+	m_TextBox->SetWindowTextW(strTotal);
+	m_TextBox->SetSel(nColNum, nColNum);
 }
 
 
